@@ -12,12 +12,25 @@
   border: 1px solid black;
 }
 
+#image {
+  display: none;
+}
+
+.label_image {
+  display: block;
+  background-color: darkcyan;
+  text-align: center;
+  margin: 5px auto;
+  padding: 5px;
+}
+
 .edit_block input {
   display: block;
   width: 100%;
   margin: 10px 0;
   height: 40px;
   font-size: 24px;
+  border: 2px solid black;
 }
 
 .download {
