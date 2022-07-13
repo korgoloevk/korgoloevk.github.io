@@ -1,3 +1,7 @@
+@font-face {
+  font-family: "UbuntuMedium";
+  src: url("/fonts/ubuntuMedium.ttf");
+}
 * {
   margin: 0;
   padding: 2px;
@@ -5,11 +9,25 @@
 }
 .wrapper {
   margin: 0 auto;
-  max-width: 700px;
+  max-width: 768px;
 }
 .canvas {
   width: 100%;
   border: 1px solid black;
+}
+
+.setSize {
+  display: flex;
+  justify-content: space-between;
+}
+
+.setSize input {
+  font-size: 16px;
+  width: 32%;
+  border: none;
+  background-color: cornflowerblue;
+  height: 40px;
+  border-radius: 5px;
 }
 
 #image {
@@ -49,3 +67,20 @@
 .download input:active {
   transform: scale(0.8);
 }
+
+/* #rangeOnCanvas1 {
+  position: absolute;
+  top: 33%;
+  left: 5%;
+  width: 100%;
+}
+#rangeOnCanvas2 {
+  position: absolute;
+  top: 37.8%;
+  left: 5%;
+  width: 100%;
+}
+
+.rangeOnCanvas {
+  /* opacity: 0; */
+/* } */

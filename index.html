@@ -12,15 +12,47 @@
 <body>
     <div class="wrapper">
         <div class="canvas_block">
-            <canvas class="canvas" width="300" height="300"></canvas>
+            <!-- <input class="rangeOnCanvas" id="rangeOnCanvas1" type="range" min="10" max="1080" step="1" value="50">
+            <input class="rangeOnCanvas" id="rangeOnCanvas2" type="range" min="10" max="1080" step="1" value="50"> -->
+            <canvas class="canvas" width="1080" height="1080"></canvas>
+            <div class="setSize">
+                <input type="button" value="1:1" id="square">
+                <input type="button" value="16:9" id="gorizontal">
+                <input type="button" value="9:16" id="vertical">
+            </div>
             <label for="image" class="label_image">Выберите файл</label>
             <input type="file" id="image" accept="image/*">
+            <div class="regions">
+                <select id="currentColor">
+                    <option value="#d36054">Калининград</option>
+                    <option value="#f7c800">Ростов</option>
+                    <option value="#008b49">Татарстан</option>
+                    <option value="#dd322f">Нижний Новгород</option>
+                    <option value="#3f3a2f">Владикавказ</option>
+                    <option value="#28be52">Краснодар</option>
+                    <option value="#0578d6">Севастополь</option>
+                    <option value="#000000">Урал</option>
+                    <option value="#d8a330">Уфа</option>
+                    <option value="#c9bc89">Красноярск</option>
+                    <option value="#019b75">Сибирь</option>
+                    <option value="#004ec8">Иркутск</option>
+                    <option value="#f77500">Хабаровск</option>
+                </select>
+            </div>
+            <div class="switchStyle">
+                <select name="style" id="styleSelector">
+                    <option value="gradient">Градиент</option>
+                    <!--<option value="colorGradient">Цветной Градиент</option>-->
+                    <option value="whiteBack" selected="">Белый фон</option>
+                    <option value="colorBack">Цветной фон</option>
+                </select>
+            </div>
         </div>
         <div class="edit_block">
             <form action="#">
-                <input type="text" class="stroke_1">
-                <input type="text" class="stroke_2">
-                <input type="text" class="stroke_3">
+                <input type="text" class="stroke stroke_1">
+                <input type="text" class="stroke stroke_2">
+                <input type="text" class="stroke stroke_3">
             </form>
         </div>
         <div class="download">
