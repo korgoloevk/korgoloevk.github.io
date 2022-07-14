@@ -73,7 +73,7 @@ function setImage(
       ctx.drawImage(img, startX, startY, width, height);
       setGradient();
       setSubstrate(styleSelector, stroke1Width, stroke2Width, startX, startY);
-      setText(textX, textY, styleSelector);
+      setText(styleSelector);
     };
   } catch (e) {
     console.log("Какая-то ошибка");
@@ -120,7 +120,10 @@ function setImageBeforeChangeAttr(width, height) {
 //Рисуем текст и подложку на картинку
 //
 
-function setText(startX, startY, style = "whiteBack") {
+function setText(style = "whiteBack") {
+  let textX = currentSize === "gorizontal" ? 493.24 : 73.24;
+  let textY = currentSize === "vertical" ? 1292.84 : 872.84;
+
   let textColor = "#ffffff";
 
   ctx.font = "54.62px UbuntuMedium";
@@ -133,10 +136,18 @@ function setText(startX, startY, style = "whiteBack") {
   if (style === "whiteBack") {
     textColor = "#000000";
   }
-
-  ctx.fillStyle = textColor;
-  ctx.fillText(strokeText[1], startX, startY);
-  ctx.fillText(strokeText[2], startX, startY + 70);
+  if (style === "gradient") {
+    ctx.fillStyle = textColor;
+    textX -= 26.24;
+    textY -= 23.84;
+    ctx.fillText(strokeText[1], textX, textY);
+    ctx.fillText(strokeText[2], textX, textY + 70);
+    ctx.fillText(strokeText[3], textX, textY + 140);
+  } else {
+    ctx.fillStyle = textColor;
+    ctx.fillText(strokeText[1], textX, textY);
+    ctx.fillText(strokeText[2], textX, textY + 70);
+  }
 }
 
 form.addEventListener("input", (e) => {
@@ -234,7 +245,7 @@ function setGradient() {
   } else {
     const gradient = ctx.createLinearGradient(0, 1080, 0, 600);
     gradient.addColorStop(0, "rgba(0, 0, 0, 0.299)");
-    gradient.addColorStop(0.5, "rgba(0, startY0, 0, 0.250)");
+    gradient.addColorStop(0.5, "rgba(0, 0, 0, 0.250)");
     gradient.addColorStop(1, "rgba(229, 229, 229, 0.020)");
     ctx.fillStyle = gradient;
     ctx.fillRect(startX, startY, 1080, 1080);
