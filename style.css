@@ -6,6 +6,8 @@
   margin: 0;
   padding: 2px;
   box-sizing: border-box;
+  text-transform: uppercase;
+  font-family: "UbuntuMedium";
 }
 .wrapper {
   margin: 0 auto;
@@ -49,6 +51,7 @@
   height: 40px;
   font-size: 24px;
   border: 2px solid black;
+  text-transform: uppercase;
 }
 
 .download {
@@ -68,19 +71,36 @@
   transform: scale(0.8);
 }
 
-/* #rangeOnCanvas1 {
-  position: absolute;
-  top: 33%;
-  left: 5%;
-  width: 100%;
+.selectors {
+  display: flex;
+  justify-content: space-between;
+  font-size: 24px;
 }
-#rangeOnCanvas2 {
-  position: absolute;
-  top: 37.8%;
-  left: 5%;
+.regions {
+  width: 50%;
+}
+.regions select {
+  border: none;
+  background-color: cornflowerblue;
+  height: 30px;
   width: 100%;
 }
 
-.rangeOnCanvas {
-  /* opacity: 0; */
-/* } */
+.regions select option {
+  background-color: white;
+  font-size: 16px;
+}
+.switchStyle {
+  width: 50%;
+}
+.switchStyle select {
+  border: none;
+  background-color: cornflowerblue;
+  height: 30px;
+  width: 100%;
+}
+
+.switchStyle select option {
+  background-color: white;
+  font-size: 16px;
+}

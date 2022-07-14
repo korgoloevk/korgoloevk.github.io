@@ -44,9 +44,10 @@ setSize.addEventListener("click", (e) => {
   }
 });
 
-function fillCanvas() {
-  const width = currentSize === "gorizontal" ? 1920 : 1080;
-  const height = currentSize === "vertical" ? 1920 : 1080;
+function clearFillCanvas() {
+  const width = canvas.getAttribute("width");
+  const height = canvas.getAttribute("height");
+  ctx.clearRect(0, 0, width, height);
   ctx.fillStyle = "#ffffff";
   ctx.fillRect(0, 0, width, height);
 }
@@ -63,20 +64,14 @@ function setImage(
 ) {
   const styleSelector = document.querySelector("#styleSelector").value;
 
-  ctx.clearRect(
-    0,
-    0,
-    canvas.getAttribute("width"),
-    canvas.getAttribute("height")
-  );
-
-  fillCanvas();
+  clearFillCanvas();
 
   try {
     const img = new Image();
     img.src = window.URL.createObjectURL(image.files[0]);
     img.onload = () => {
       ctx.drawImage(img, startX, startY, width, height);
+      setGradient();
       setSubstrate(styleSelector, stroke1Width, stroke2Width, startX, startY);
       setText(textX, textY, styleSelector);
     };
@@ -219,12 +214,35 @@ canvas.addEventListener("click", (e) => {
   }
 });
 
-document.querySelector("#download").addEventListener("click", () => {
-  if (currentSize === "square") {
-    Canvas2Image.saveAsPNG(canvas, 1080, 1080);
-  } else if (currentSize === "gorizontal") {
-    Canvas2Image.saveAsPNG(canvas, 1920, 1080);
-  } else if (currentSize === "vertical") {
-    Canvas2Image.saveAsPNG(canvas, 1080, 1920);
+function setGradient() {
+  const styleSelector = document.querySelector("#styleSelector").value;
+  const startX = currentSize !== "gorizontal" ? 0 : 420;
+  const startY = currentSize !== "vertical" ? 0 : 420;
+  if (styleSelector === "gradient") {
+    const gradient = ctx.createLinearGradient(
+      0,
+      1080 + startY,
+      0,
+      600 + startY
+    );
+    gradient.addColorStop(0, "rgba(0, 0, 0, 0.999)");
+    gradient.addColorStop(0.2, "rgba(0, 0, 0, 0.900)");
+    gradient.addColorStop(0.4, "rgba(0, 0, 0, 0.750)");
+    gradient.addColorStop(1, "rgba(0, 0, 0, 0.000)");
+    ctx.fillStyle = gradient;
+    ctx.fillRect(startX, startY, 1080, 1080);
+  } else {
+    const gradient = ctx.createLinearGradient(0, 1080, 0, 600);
+    gradient.addColorStop(0, "rgba(0, 0, 0, 0.299)");
+    gradient.addColorStop(0.5, "rgba(0, startY0, 0, 0.250)");
+    gradient.addColorStop(1, "rgba(229, 229, 229, 0.020)");
+    ctx.fillStyle = gradient;
+    ctx.fillRect(startX, startY, 1080, 1080);
   }
+}
+
+document.querySelector("#download").addEventListener("click", () => {
+  const width = canvas.getAttribute("width");
+  const height = canvas.getAttribute("height");
+  Canvas2Image.saveAsPNG(canvas, width, height);
 });
