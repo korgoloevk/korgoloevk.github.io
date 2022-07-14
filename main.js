@@ -44,6 +44,13 @@ setSize.addEventListener("click", (e) => {
   }
 });
 
+function fillCanvas() {
+  const width = currentSize === "gorizontal" ? 1920 : 1080;
+  const height = currentSize === "vertical" ? 1920 : 1080;
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, width, height);
+}
+
 //Устанавливаем картинку в канвас, каждый раз чистим перед этом всё поле
 //start последний аттрибут, так как меняется в зависимости от пожелания
 function setImage(
@@ -62,12 +69,15 @@ function setImage(
     canvas.getAttribute("width"),
     canvas.getAttribute("height")
   );
+
+  fillCanvas();
+
   try {
     const img = new Image();
     img.src = window.URL.createObjectURL(image.files[0]);
     img.onload = () => {
       ctx.drawImage(img, startX, startY, width, height);
-      setSubstrate(styleSelector, stroke1Width, stroke2Width);
+      setSubstrate(styleSelector, stroke1Width, stroke2Width, startX, startY);
       setText(textX, textY, styleSelector);
     };
   } catch (e) {
@@ -146,37 +156,75 @@ form.addEventListener("input", (e) => {
 
 function setSubstrate(style, width1 = 0, width2 = 0) {
   const currentColor = document.querySelector("#currentColor").value;
+  const startX = currentSize === "gorizontal" ? 470 : 50;
+  const startY = currentSize === "vertical" ? 1227 : 807;
   ctx.fillStyle = currentColor;
-  ctx.fillRect(0, 1051, 1080, 29);
+  ctx.fillRect(startX - 50, startY + 244, 1080, 29);
 
   if (style === "colorBack") {
-    ctx.fillRect(50, 807, width1, 88);
-    ctx.fillRect(50, 882, width2, 88);
+    ctx.fillRect(startX, startY, width1, 88);
+    ctx.fillRect(startX, startY + 75, width2, 88);
   } else if (style === "whiteBack") {
     ctx.fillStyle = "white";
-    ctx.fillRect(50, 807, width1, 88);
-    ctx.fillRect(50, 882, width2, 88);
+    ctx.fillRect(startX, startY, width1, 88);
+    ctx.fillRect(startX, startY + 75, width2, 88);
     ctx.fillStyle = currentColor;
-    ctx.fillRect(50, 983, 1000, 14);
+    ctx.fillRect(startX, startY + 176, width2, 14);
   } else if (style === "gradient") {
   }
 }
 
 canvas.addEventListener("click", (e) => {
-  const proportions = 1080 / canvas.offsetWidth;
-  const yPos = e.offsetY * proportions;
-  console.log(yPos);
+  let yPos = 0;
+  let proportions = 0;
+  if (currentSize !== "gorizontal") {
+    proportions = 1080 / canvas.offsetWidth;
+    yPos = e.offsetY * proportions;
+  } else {
+    proportions = 1920 / canvas.offsetWidth;
+    yPos = e.offsetY * proportions;
+  }
 
   if (currentSize === "square" && yPos > 802 && yPos < 876) {
-    const width1 = e.offsetX * proportions - 30;
+    const width1 = e.offsetX * proportions - 50;
     stroke1Width = width1;
   } else if (currentSize === "square" && yPos > 879 && yPos < 962) {
-    const width2 = e.offsetX * proportions - 30;
+    const width2 = e.offsetX * proportions - 50;
+    stroke2Width = width2;
+  }
+
+  if (currentSize === "gorizontal" && yPos > 802 && yPos < 876) {
+    const width1 = e.offsetX * proportions - 470;
+    stroke1Width = width1;
+  } else if (currentSize === "gorizontal" && yPos > 879 && yPos < 962) {
+    const width2 = e.offsetX * proportions - 470;
+    stroke2Width = width2;
+  }
+
+  if (currentSize === "vertical" && yPos > 802 + 420 && yPos < 876 + 420) {
+    const width1 = e.offsetX * proportions - 50;
+    stroke1Width = width1;
+  } else if (
+    currentSize === "vertical" &&
+    yPos > 879 + 420 &&
+    yPos < 962 + 420
+  ) {
+    const width2 = e.offsetX * proportions - 50;
     stroke2Width = width2;
   }
   if (switcher === 0) {
     setImageBeforeChangeAttr(currentWidth, currentHeight);
   } else {
     setImageBeforeChangeAttr(1080, 1080);
+  }
+});
+
+document.querySelector("#download").addEventListener("click", () => {
+  if (currentSize === "square") {
+    Canvas2Image.saveAsPNG(canvas, 1080, 1080);
+  } else if (currentSize === "gorizontal") {
+    Canvas2Image.saveAsPNG(canvas, 1920, 1080);
+  } else if (currentSize === "vertical") {
+    Canvas2Image.saveAsPNG(canvas, 1080, 1920);
   }
 });
