@@ -8,6 +8,7 @@
   box-sizing: border-box;
   text-transform: uppercase;
   font-family: "UbuntuMedium";
+  color: black;
 }
 .wrapper {
   margin: 0 auto;
@@ -29,7 +30,10 @@
   border: none;
   background-color: cornflowerblue;
   height: 40px;
-  border-radius: 5px;
+}
+
+.setSize input:active {
+  background-color: rgb(147, 181, 245);
 }
 
 #image {
@@ -42,6 +46,10 @@
   text-align: center;
   margin: 5px auto;
   padding: 5px;
+}
+
+.label_image:active {
+  background-color: rgb(0, 190, 190);
 }
 
 .edit_block input {
@@ -65,10 +73,9 @@
   border: none;
   background-color: cornflowerblue;
   height: 40px;
-  border-radius: 5px;
 }
 .download input:active {
-  transform: scale(0.8);
+  background-color: rgb(147, 181, 245);
 }
 
 .selectors {
